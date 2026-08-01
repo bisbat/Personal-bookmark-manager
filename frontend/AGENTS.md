@@ -20,6 +20,10 @@ You are an expert Frontend Developer specializing in React 18, Vite, TypeScript,
   — set Vite's dev server to run on port 3000 (`vite.config.ts` → `server.port: 3000`),
   and create a `/callback` route/component that handles Auth0's redirect (`Auth0Provider`
   needs this to complete the code exchange).
+- **Post-callback redirect:** After Auth0Provider processes the callback, use
+`onRedirectCallback` (with `useNavigate` from `react-router`) to leave `/callback` and
+navigate to `appState.returnTo` (falling back to `/`). Never leave the user sitting on
+a URL containing `?code=...&state=...` — the code is single-use and a refresh will break.
 
 ## 4. Routing & Protected Routes
 - **Router:** Use `react-router` (NOT `react-router-dom` — that package was removed in v8). Import route-matching APIs from `react-router`; import `RouterProvider` from `react-router/dom` specifically.
