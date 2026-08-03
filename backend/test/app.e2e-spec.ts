@@ -2,6 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types';
+
+jest.mock('jwks-rsa', () => ({
+  __esModule: true,
+  passportJwtSecret: jest.fn(() => () => 'test-secret'),
+}));
+
 import { AppModule } from './../src/app.module';
 
 describe('AppController (e2e)', () => {
@@ -25,5 +31,9 @@ describe('AppController (e2e)', () => {
 
   afterEach(async () => {
     await app.close();
+  });
+
+  afterAll(async () => {
+    await app.close(); 
   });
 });

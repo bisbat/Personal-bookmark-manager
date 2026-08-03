@@ -12,7 +12,7 @@
  */
 
 import * as runtime from "@prisma/client/runtime/client"
-import type * as Prisma from "./prismaNamespace.js"
+import type * as Prisma from "./prismaNamespace"
 
 
 const config: runtime.GetPrismaClientConfig = {
@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.9.1",
   "engineVersion": "e922089b7d7502aff4249d5da3420f6fa55fc6ad",
   "activeProvider": "postgresql",
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Get a free hosted Postgres database in seconds: `npx create-db`\n\ngenerator client {\n  provider     = \"prisma-client\"\n  output       = \"./generated\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Collection {\n  id        String     @id @default(cuid())\n  name      String\n  ownerId   String\n  createdAt DateTime   @default(now())\n  updatedAt DateTime   @updatedAt\n  bookmarks Bookmark[]\n\n  @@index([ownerId])\n}\n\nmodel Bookmark {\n  id           String      @id @default(cuid())\n  url          String\n  title        String\n  notes        String?\n  collectionId String?\n  collection   Collection? @relation(fields: [collectionId], references: [id], onDelete: SetNull)\n  ownerId      String\n  createdAt    DateTime    @default(now())\n  updatedAt    DateTime    @updatedAt\n\n  @@index([ownerId])\n  @@index([ownerId, collectionId])\n}\n",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Get a free hosted Postgres database in seconds: `npx create-db`\n\ngenerator client {\n  provider               = \"prisma-client\"\n  output                 = \"./generated\"\n  moduleFormat           = \"cjs\"\n  generatedFileExtension = \"ts\"\n  importFileExtension    = \"\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Collection {\n  id        String     @id @default(cuid())\n  name      String\n  ownerId   String\n  createdAt DateTime   @default(now())\n  updatedAt DateTime   @updatedAt\n  bookmarks Bookmark[]\n\n  @@index([ownerId])\n}\n\nmodel Bookmark {\n  id           String      @id @default(cuid())\n  url          String\n  title        String\n  notes        String?\n  collectionId String?\n  collection   Collection? @relation(fields: [collectionId], references: [id], onDelete: SetNull)\n  ownerId      String\n  createdAt    DateTime    @default(now())\n  updatedAt    DateTime    @updatedAt\n\n  @@index([ownerId])\n  @@index([ownerId, collectionId])\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
