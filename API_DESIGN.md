@@ -13,24 +13,24 @@
 - **Status Codes***ข้อตกลงในการใช้ HTTP Response Code เพื่อสื่อสารสถานะการทำงาน:*
     - **`200 OK` / `201 Created`** : สำเร็จ (200 สำหรับดึง/แก้ไขข้อมูล, 201 สำหรับสร้างข้อมูลใหม่)
         
-        ![Project Screenshot](API_DESIGN(IMG)/image (9).png)
+        ![Project Screenshot](API_DESIGN(IMG)/image(9).png)
         
-        ![Project Screenshot](API_DESIGN(IMG)/image (10).png)
+        ![Project Screenshot](API_DESIGN(IMG)/image(10).png)
         
     - **`400 Bad Request`** : ข้อมูลที่ส่งมาไม่ผ่านการตรวจสอบ (Validation Error) เช่น ลืมส่ง URL หรือฟอร์แมตผิด
         
-        ![Project Screenshot](API_DESIGN(IMG)/image (11).png)
+        ![Project Screenshot](API_DESIGN(IMG)/image(11).png)
         
     - **`401 Unauthorized`** : เกิดข้อผิดพลาดเกี่ยวกับการยืนยันตัวตน เช่น ไม่ได้แนบ Token มา, Token หมดอายุ หรือ Token ไม่ถูกต้อง
         
-        ![Project Screenshot](API_DESIGN(IMG)/image (13).png)
+        ![Project Screenshot](API_DESIGN(IMG)/image(13).png)
         
     - **`404 Not Found`** : ไม่พบข้อมูลที่ร้องขอ
         - *Security Note:* หากผู้ใช้พยายามเข้าถึง Bookmark ID ที่มีอยู่จริงในระบบ **แต่เป็นของผู้อื่น** ระบบจะบังคับคืนค่า `404 Not Found` (แทนที่จะเป็น 403) เพื่อซ่อนการมีอยู่ของข้อมูลนั้น ป้องกันการคาดเดาหรือสุ่ม ID (ID Enumeration)
             
             ตัวอย่าง จากการยิง Postman เมื่อ bookmark id : 111 ไม่มีอยู่จริง และเมื่อ User คนอื่นพยายามเข้ามาก็ให้ return 404 เพื่อไม่บอกว่ามี Data นี้อยู่จริงๆ เพื่อความปลอดภัยและ private
             
-            ![Project Screenshot](API_DESIGN(IMG)/image (12).png)
+            ![Project Screenshot](API_DESIGN(IMG)/image(12).png)
             
 - **Privacy Invariant Enforcement (§3)***กฎความปลอดภัยขั้นเด็ดขาดในการปกป้องข้อมูลส่วนบุคคลแบบ User-Owned Resource:*
     
@@ -38,7 +38,7 @@
     
 1. **Authentication Layer:** ใช้ `JwtAuthGuard` ดักจับทุก Request ที่เข้ามา เพื่อยืนยันว่าผู้ใช้มีสิทธิ์เข้าถึง และทำการดึง `userId` ออกมาจาก Token
     
-    ![Project Screenshot](API_DESIGN(IMG)/image (8).png)
+    ![Project Screenshot](API_DESIGN(IMG)/image(8).png)
     
 2. **Database / Repository Layer:** ในการ Query ฐานข้อมูลทุกครั้ง (ดึง, แก้ไข, ลบ) มีการบังคับใส่เงื่อนไขดักข้อมูล `where: { id: id, ownerId: user.id }` ควบคู่กันเสมอ เพื่อให้มั่นใจว่าผู้ใช้จะได้เฉพาะกับ Resource ที่ตนเองเป็นเจ้าของเท่านั้น
 
@@ -72,19 +72,19 @@
 - **วิธีตรวจพบ:** ได้ศึกษาเพิ่มเติมจาก YouTube และตรวจสอบกับ Auth0 Documentation พบว่าการใช้งานร่วมกับ Custom Router (เช่น React Router) ควรใช้ `onRedirectCallback`
 - **การแก้ไข:** ได้นำแนวทาง `onRedirectCallback` ไปถาม AI Agent ซึ่ง AI ตรวจสอบแล้วยืนยันว่าเป็น Best Practice จริง จึงให้ AI นำมาตรการนี้มาปรับใช้กับ `Auth0Provider` เพื่อให้สามารถพาย้อนกลับไปยังหน้าที่ผู้ใช้ต้องการก่อนถูกขัดจังหวะ
     
-    ![Project Screenshot](API_DESIGN(IMG)/image (1).png)
+    ![Project Screenshot](API_DESIGN(IMG)/image(1).png)
     
-    ![Project Screenshot](API_DESIGN(IMG)/image (2).png)
+    ![Project Screenshot](API_DESIGN(IMG)/image(2).png)
     
-    ![Project Screenshot](API_DESIGN(IMG)/image (3).png)
+    ![Project Screenshot](API_DESIGN(IMG)/image(3).png)
     
-    ![Project Screenshot](API_DESIGN(IMG)/image (4).png)
+    ![Project Screenshot](API_DESIGN(IMG)/image(4).png)
     
-    ![Project Screenshot](API_DESIGN(IMG)/image (5).png)
+    ![Project Screenshot](API_DESIGN(IMG)/image(5).png)
     
-    ![Project Screenshot](API_DESIGN(IMG)/image (6).png)
+    ![Project Screenshot](API_DESIGN(IMG)/image(6).png)
     
-    ![Project Screenshot](API_DESIGN(IMG)/image (7).png)
+    ![Project Screenshot](API_DESIGN(IMG)/image(7).png)
     
     > **Note** If you are using a custom router, you will need to supply the **`Auth0Provider`** with a custom **`onRedirectCallback`** method to perform the action that returns the user to the protected page. See examples for react-router, Gatsby and Next.js.
     ref : https://auth0.com/docs/libraries/auth0-react
