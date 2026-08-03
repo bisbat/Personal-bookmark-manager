@@ -11,7 +11,15 @@ You are an expert Backend Developer specializing in NestJS 10, Prisma 5, and Pos
 ## 3. Database (Prisma) Rules
 - **Prisma Service:** Always inject `PrismaService` into feature services. Do not create global or floating Prisma Client instances.
 - **Schema Management:** If you need to update `schema.prisma` (e.g., adding a relation between Collection and Bookmark), DO NOT run the migration automatically. Simply output the required terminal command (`npx prisma migrate dev --name <reason>`) and ask the user to run it.
-
+- **Prisma 7 syntax only:** This project uses Prisma ^7.9.1. Do NOT put `url = env(...)`
+  in `schema.prisma` — it belongs in `prisma.config.ts`. Generator provider is
+  `"prisma-client"` (not `"prisma-client-js"`), with an explicit `output` path.
+  `PrismaService` MUST instantiate `PrismaClient` with a `@prisma/adapter-pg` driver
+  adapter — Prisma 7 no longer ships the Rust query engine by default.
+  - **PrismaService location:** `src/prisma/prisma.service.ts`, provided globally via
+  `PrismaModule` (`@Global()`). Do not create a new PrismaClient instance anywhere else
+  in the codebase — always inject `PrismaService`.
+  
 ## 4. Auth0 & Security Implementation (CRITICAL)
 - **Route Protection:** All endpoints related to user data MUST be protected using an Auth0 JWT Guard (`@UseGuards(AuthGuard('jwt'))`).
 - **User Decorator:** Create and utilize a custom `@CurrentUser()` decorator to extract the authenticated user's ID directly from the validated JWT payload.
