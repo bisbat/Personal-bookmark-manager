@@ -18,7 +18,7 @@ function Auth0ProviderWithNavigate({ children }: PropsWithChildren) {
   const onRedirectCallback = useCallback(
     (appState?: AppState): void => {
       const returnTo = appState?.returnTo;
-      const destination = returnTo?.startsWith('/') && !returnTo.startsWith('//') ? returnTo : '/';
+      const destination = returnTo?.startsWith('/bookmarks') && !returnTo.startsWith('//') ? returnTo : '/bookmarks';
 
       navigate(destination, { replace: true });
     },
