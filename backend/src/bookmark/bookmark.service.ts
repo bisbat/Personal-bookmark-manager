@@ -21,12 +21,18 @@ export class BookmarkService {
         id: string,
         ownerId: string,
     ): Promise<Bookmark | null> {
-        return this.prisma.bookmark.findFirst({
+        const bookmark = await this.prisma.bookmark.findFirst({
             where: {
                 id,
                 ownerId,
             },
         });
+
+        if (!bookmark) {
+            throw new NotFoundException('ไม่พบ Bookmark นี้ หรือคุณไม่มีสิทธิ์เข้าถึง');
+        }
+
+        return bookmark;
     }
 
     async create(createBookmarkDto: CreateBookmarkDto, ownerId: string): Promise<Bookmark> {

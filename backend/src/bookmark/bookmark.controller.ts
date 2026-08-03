@@ -20,17 +20,17 @@ export class BookmarkController {
   }
 
   @Get()
-  findAll(@CurrentUser() user: AuthUser) {
+  async findAll(@CurrentUser() user: AuthUser) {
     return this.bookmarkService.findAllByOwnerId(this.getOwnerId(user));
   }
 
   @Get(':id')
-  findOneById(@CurrentUser() user: AuthUser, @Param('id') id: string) {
+  async findOneById(@CurrentUser() user: AuthUser, @Param('id') id: string) {
     return this.bookmarkService.findOneByIdAndOwnerId(id, this.getOwnerId(user));
   }
 
   @Post()
-  create(
+  async create(
     @Body() createBookmarkDto: CreateBookmarkDto,
     @CurrentUser() user: AuthUser,
   ) {
@@ -38,7 +38,7 @@ export class BookmarkController {
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateBookmarkDto: UpdateBookmarkDto,
     @CurrentUser() user: AuthUser,
@@ -47,7 +47,7 @@ export class BookmarkController {
   }
 
   @Delete(':id')
-  remove(
+  async remove(
     @Param('id') id: string,
     @CurrentUser() user: AuthUser,
   ) {
