@@ -8,7 +8,7 @@ import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
 export class BookmarkService {
     constructor(private readonly prisma: PrismaService) { }
 
-    async findAllByOwnerId(
+    findAllByOwnerId(
         ownerId: string,
     ): Promise<Bookmark[]> {
         return this.prisma.bookmark.findMany({
@@ -35,7 +35,7 @@ export class BookmarkService {
         return bookmark;
     }
 
-    async create(createBookmarkDto: CreateBookmarkDto, ownerId: string): Promise<Bookmark> {
+    create(createBookmarkDto: CreateBookmarkDto, ownerId: string): Promise<Bookmark> {
         return this.prisma.bookmark.create({
             data: {
                 url: createBookmarkDto.url,
