@@ -29,7 +29,7 @@ export default function HomePage() {
           gap: 2, // ระยะห่างระหว่าง Element
         }}
       >
-        <Typography variant="h2" component="h1" sx={{ fontWeight: 'bold' }} color="primary">
+        <Typography variant="h2" component="h1" color="primary">
           Bookmarks App
         </Typography>
         
